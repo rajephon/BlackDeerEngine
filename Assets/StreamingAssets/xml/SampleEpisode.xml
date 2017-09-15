@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <scenario stage="1">
     <episode value="1">
-        <place name="Snow_covered_Field" character="">
-            <intro>
-                <scene no="1">
+        <place name="설원" character="">
+            <scene no="1" isIntro="false">
                     <action name="playbgm" value="investigation_main.mp3" ></action>
                     <action name="setPlaceWindow"  value="설원" ></action>
                     <action name="effectSound" value="뽀드득.mp3" ></action>
@@ -20,8 +19,7 @@
                     <action name="hideChatBox"></action>
                     <action name="getKeyword" value="NPC1" value2="1"></action>
                     <action name="showBottomButtonAndStatus" value=""></action>
-                </scene>
-            </intro>
+            </scene>
         </place>
     </episode>
 </scenario>
