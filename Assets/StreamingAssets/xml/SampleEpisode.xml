@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<scenario stage="1">
+    <episode value="1">
+        <place name="Snow_covered_Field" character="">
+            <intro>
+                <scene no="1">
+                    <action name="playbgm" value="investigation_main.mp3" ></action>
+                    <action name="setPlaceWindow"  value="설원" ></action>
+                    <action name="effectSound" value="뽀드득.mp3" ></action>
+                    <action name="delay" value="1.5" ></action>
+
+                    <action name="showChatBox"></action>
+                    <action name="chatBox" value="???" value2="누구?"></action>
+                    <action name="hideChatBox"></action>
+                    
+                    <action name="showMainChar" value="NPC1" value2="normal"></action>
+                    
+                    <action name="addMovableLocation" value="초원2"></action>
+                    <action name="charExpression" value="NPC1" value2="normal"></action>
+                    <action name="hideChatBox"></action>
+                    <action name="getKeyword" value="NPC1" value2="1"></action>
+                    <action name="showBottomButtonAndStatus" value=""></action>
+                </scene>
+            </intro>
+        </place>
+    </episode>
+</scenario>
