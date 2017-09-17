@@ -43,7 +43,6 @@ public class BlackDeerEngine : MonoBehaviour {
 		#if (UNITY_EDITOR || UNITY_IOS || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN)
       		// Debug.Log("Unity Editor");
     	#endif
-    
 
 		#if (UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS)
 			Debug.Log("UNITY_EDITOR");
@@ -68,20 +67,9 @@ public class BlackDeerEngine : MonoBehaviour {
 	}
 	
 	private void progress() {
-		// TODO: action
-	}
-
-	private void Interpret(string _strSource) {
-		Debug.Log("Interpret: " + _strSource);
-		StringReader stringReader = new StringReader(_strSource);
-		// stringReader.Read();
 		XmlNodeList xmlNodeList = null;
-		XmlDocument xmlDoc = new XmlDocument();
-		xmlDoc.LoadXml(stringReader.ReadToEnd());
 		xmlNodeList = xmlDoc.SelectNodes("scenario");
-
 		foreach(XmlNode node in xmlNodeList) {
-			Debug.Log("11111");
 			if (node.Name.Equals("scenario") && node.HasChildNodes) {
 				Debug.Log("222222");
 				foreach(XmlNode child in node.ChildNodes) {
@@ -95,4 +83,5 @@ public class BlackDeerEngine : MonoBehaviour {
 			}
 		}
 	}
+
 }
