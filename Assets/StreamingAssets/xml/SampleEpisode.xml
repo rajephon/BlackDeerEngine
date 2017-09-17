@@ -3,6 +3,8 @@
     <episode value="1">
         <place name="설원" character="">
             <scene no="1" isIntro="false">
+                    <action name="페이드인" value="3"></action>
+                    <action name="페이드인" value="3"></action>
                     <action name="playbgm" value="investigation_main.mp3" ></action>
                     <action name="setPlaceWindow"  value="설원" ></action>
                     <action name="effectSound" value="뽀드득.mp3" ></action>

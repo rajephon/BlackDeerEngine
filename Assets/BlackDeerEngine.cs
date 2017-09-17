@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using System.IO;
 using System.Xml;
@@ -8,6 +9,8 @@ using System.Text;
 using System;
 
 public class BlackDeerEngine : MonoBehaviour {
+	// UISetting
+	public GameObject fadePanel = null;
 	public class GameProgress {
 		public int stage;
 		public int episode;
@@ -35,11 +38,17 @@ public class BlackDeerEngine : MonoBehaviour {
 	void Start () {
 		gameProgress = new GameProgress(1, 1, "설원", 1, 1);
 		StartCoroutine(LoadXMLResource());
+		initEnvironment();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	private void initEnvironment() {
+		BDFadeInOut bdFadeInOut = fadePanel.AddComponent<BDFadeInOut>();
+		BDActionFadeInOut.setFadePanel(bdFadeInOut);
 	}
 
 	IEnumerator LoadXMLResource() {
@@ -83,24 +92,23 @@ public class BlackDeerEngine : MonoBehaviour {
 			printError("ERROR: xmlNodeList.Count == 0");
 			return;
 		}
-		Debug.Log("A c: " + xmlNodeList.Count);
+
 		XmlNode actionNode = xmlNodeList[0];
 		if (actionNode.Attributes["name"] == null) {
 			printError("ERROR: actionNode.Attributes[\"name\"] is null");
 			return;
 		}
+		BDAction bdAction = BDAction.create(actionNode);
+		bdAction.start();
+		/*
 		BDAction bdAction = new BDAction(actionNode.Attributes["name"].Value);
-
-		// foreach(XmlNode node in xmlNodeList) {
-		// 	if (node.Name.Equals("stage") && node.HasChildNodes) {
-		// 		foreach(XmlNode child in node.ChildNodes) {
-		// 			Debug.Log("id: "+ child.Name);
-		// 			if (child.Name == "episode") {
-		// 			}
-		// 			// Debug.Log("id: " + child.Attributes.GetNamedItem("id").Value);
-		// 		}
-		// 	}
-		// }
+		Debug.Log("action name: "+ bdAction.Name);
+		
+		// do Progress
+		if (bdAction.Name == "페이드아웃") {
+			Debug.Log("gogo");
+		}
+		 */
 	}
 
 }
