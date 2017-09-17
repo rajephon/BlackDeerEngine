@@ -11,7 +11,7 @@ public class BDAction {
 	public BDAction(string name) {
 		this.name = name;
 	}
-
+	public delegate void CompletionDelegate();
 	public static BDAction create(XmlNode actionNode) {
 		string actionName = actionNode.Attributes["name"].Value;
 		if (actionName == "페이드아웃" || actionName == "페이드인") {
@@ -27,8 +27,9 @@ public class BDAction {
 		}
 		return null;
 	}
-	public virtual void start() {
+	public virtual void start(CompletionDelegate completionDelegate) {
 		Debug.Log("부모 클래스의 start()가 호출되었습니다. action name : "+name);
+		completionDelegate();
 	}
 	public string Name {
 		get { return name; }
@@ -48,16 +49,16 @@ public class BDActionFadeInOut: BDAction {
 		this.period = period;
 		this.isFadeIn = isFadeIn;
 	}
-	public override void start() {
+	public override void start(CompletionDelegate completionDelegate) {
 		Debug.Log("BDActionFade"+((isFadeIn)?"In":"Out"));
 		if (bdFadeInOut == null) {
 			Debug.Log("- bdFadeInOut component is null");
 			return;
 		}
 		if (isFadeIn) {
-			bdFadeInOut.startFadeIn(period);
+			bdFadeInOut.startFadeIn(period, completionDelegate);
 		}else {
-			bdFadeInOut.startFadeOut(period);
+			bdFadeInOut.startFadeOut(period, completionDelegate);
 		}
 	}
 }

@@ -8,6 +8,7 @@ public class BDFadeInOut : MonoBehaviour {
 	float time = 0;
 	float period = 1.0f;
 	int fadeMode = 0; // 0: stop / 1: fadein / 2: fadeout
+	private BDAction.CompletionDelegate completionDelegate = null;
 	// Use this for initialization
 	void Start () {
 		fade = gameObject.GetComponent<UnityEngine.UI.Image>();
@@ -30,25 +31,30 @@ public class BDFadeInOut : MonoBehaviour {
 			}else {
 				fadeMode = 0;
 				time = 0;
+				if (completionDelegate != null) {
+					completionDelegate();
+				}
 			}
 		}
 	}
 
-	public void startFadeIn(float period) {
+	public void startFadeIn(float period, BDAction.CompletionDelegate completionDelegate) {
 		if (period == 0) {
 			period = 0.1f;
 		}
 		fadeMode = 1;
 		this.period = period;
 		this.time = period;
+		this.completionDelegate = completionDelegate;
 	}
 
-	public void startFadeOut(float period) {
+	public void startFadeOut(float period, BDAction.CompletionDelegate completionDelegate) {
 		if (period == 0) {
 			period = 0.1f;
 		}
 		fadeMode = 2;
 		this.period = period;
 		this.time = period;
+		this.completionDelegate = completionDelegate;
 	}
 }

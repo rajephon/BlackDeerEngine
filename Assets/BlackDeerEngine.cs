@@ -98,8 +98,11 @@ public class BlackDeerEngine : MonoBehaviour {
 			printError("ERROR: actionNode.Attributes[\"name\"] is null");
 			return;
 		}
+		BDAction.CompletionDelegate completion = delegate() {
+			Debug.Log("yeahhhhhhh");
+		};
 		BDAction bdAction = BDAction.create(actionNode);
-		bdAction.start();
+		bdAction.start(completion);
 		/*
 		BDAction bdAction = new BDAction(actionNode.Attributes["name"].Value);
 		Debug.Log("action name: "+ bdAction.Name);
