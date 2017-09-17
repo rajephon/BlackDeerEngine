@@ -99,19 +99,18 @@ public class BlackDeerEngine : MonoBehaviour {
 			return;
 		}
 		BDAction.CompletionDelegate completion = delegate() {
-			Debug.Log("yeahhhhhhh");
+			// Next action.
+			Debug.Log("Next Action!!");
+			gameProgress.action++;
+			progress();
 		};
 		BDAction bdAction = BDAction.create(actionNode);
 		bdAction.start(completion);
-		/*
-		BDAction bdAction = new BDAction(actionNode.Attributes["name"].Value);
-		Debug.Log("action name: "+ bdAction.Name);
-		
-		// do Progress
-		if (bdAction.Name == "페이드아웃") {
-			Debug.Log("gogo");
-		}
-		 */
+		// Pro ->
+		// 자동으로 다음 액션으로 넘어가도 되는 것이 있지만, 그렇지 않은 액션이 있다.
+		// 액션의 구분은 BDAction 내부에서 이루어진다.
+		// delegate callback도 짜피 액션의 종류에 의해이루어진다.
+		// chatbox와 같이 자동으로 넘어가면 안되는 액션에서 completion을 무시하면 되지않을까?
 	}
 
 }
