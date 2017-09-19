@@ -14,10 +14,16 @@ public class BDCameraAnimCallback : MonoBehaviour {
 		
 	}
 
+	public void setCompletionDelegate(BDAction.CompletionDelegate completionDelegate) {
+		this.completionDelegate = completionDelegate;
+	}
+
 	void animationFinish() {
 		Debug.Log("AnimationFinish");
 		if (completionDelegate != null) {
 			completionDelegate();
+		}else {
+			Debug.Log("completionDelegate == null");
 		}
 	}
 }

@@ -51,7 +51,7 @@ public class BlackDeerEngine : MonoBehaviour {
 		BDFadeInOut bdFadeInOut = fadePanel.AddComponent<BDFadeInOut>();
 		BDActionFadeInOut.setFadePanel(bdFadeInOut);
 		BDCameraAnimCallback cameraAnimCallbackListener = mainCamera.gameObject.AddComponent<BDCameraAnimCallback>();
-		BDActionCameraMove.setMainCamera(mainCamera);
+		// BDActionCameraMove.setMainCamera(mainCamera);
 	}
 
 	IEnumerator LoadXMLResource() {

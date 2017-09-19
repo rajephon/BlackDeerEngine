@@ -26,7 +26,13 @@ public class BDAction {
 				return new BDActionFadeInOut(period, false);
 			}
 		}else if (actionName == "카메라애니메이션") {
-			return new BDActionCameraMove();
+			// <action name="카메라애니메이션" value="메인카메라" value2="sample00"></action>
+			string cameraName = actionNode.Attributes["value"].Value;
+			string animName = actionNode.Attributes["value2"].Value;
+			if (cameraName == null || animName == null) {
+				Debug.Log("cameraName == null || animName == null");
+			}
+			return new BDActionCameraMove(cameraName, animName);
 		}
 		return null;
 	}
@@ -44,11 +50,20 @@ public class BDAction {
 public class BDActionCameraMove: BDAction {
 	private static Animator animator = null;
 	private static Camera camera = null;
+	private string cameraName = null;
+	private string animName = null;
 	public static void setMainCamera(Camera camera) {
-		BDActionCameraMove.camera = camera;
+		// BDActionCameraMove.camera = camera;
 	}
-	public BDActionCameraMove() {
+	public BDActionCameraMove(string cameraName, string animName) {
+		if (cameraName == "메인카메라") {
+			camera = Camera.main;
+		}
+
 		if (camera != null) {
+			this.cameraName = cameraName;
+			this.animName = animName;
+
 			Animator currAnimator = camera.GetComponent<Animator>();
 			if (currAnimator == null) {
 				currAnimator = camera.gameObject.AddComponent<Animator>();
@@ -65,11 +80,17 @@ public class BDActionCameraMove: BDAction {
 	}
 
 	public override void start(CompletionDelegate completionDelegate) {
-		if (camera == null || animator == null) {
-			Debug.Log("camera == null || animator == null");
+		if (camera == null || animator == null || animName == null) {
+			Debug.Log("camera == null || animator == null || animName == null");
 			return;
 		}
-		animator.Play("sample00", 0);
+		BDCameraAnimCallback callback = camera.gameObject.GetComponent<BDCameraAnimCallback>();
+		if (callback == null) {
+			Debug.Log("BDCameraAnimCallback == null");
+			return;
+		}
+		callback.setCompletionDelegate(completionDelegate);
+		animator.Play(animName, 0);
 	}
 }
 
