@@ -2,14 +2,14 @@
 <stage value="1">
     <episode value="1">
         <place name="설원" character="">
-            <scene no="1" isIntro="false">
-                    <action name="페이드아웃" value="2"></action>
-                    <action name="페이드인" value="2"></action>
-                    <action name="playbgm" value="investigation_main.mp3" ></action>
+            <scene no="1" isIntro="true">
+                    <!-- <action name="페이드아웃" value="2"></action> -->
+                    <!-- <action name="페이드인" value="2"></action> -->
+                    <action name="카메라애니메이션" value="메인카메라" value2="sample00"></action>
+                    <!-- <action name="playbgm" value="investigation_main.mp3" ></action>
                     <action name="setPlaceWindow"  value="설원" ></action>
                     <action name="effectSound" value="뽀드득.mp3" ></action>
                     <action name="delay" value="1.5" ></action>
-
                     <action name="showChatBox"></action>
                     <action name="chatBox" value="???" value2="누구?"></action>
                     <action name="hideChatBox"></action>
@@ -20,7 +20,8 @@
                     <action name="charExpression" value="NPC1" value2="normal"></action>
                     <action name="hideChatBox"></action>
                     <action name="getKeyword" value="NPC1" value2="1"></action>
-                    <action name="showBottomButtonAndStatus" value=""></action>
+                    <action name="showBottomButtonAndStatus" value=""></action> -->
+                    
             </scene>
         </place>
     </episode>

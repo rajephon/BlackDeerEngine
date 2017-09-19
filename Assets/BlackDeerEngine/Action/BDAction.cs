@@ -14,6 +14,7 @@ public class BDAction {
 	public delegate void CompletionDelegate();
 	public static BDAction create(XmlNode actionNode) {
 		string actionName = actionNode.Attributes["name"].Value;
+		Debug.Log("next action : " + actionName);
 		if (actionName == "페이드아웃" || actionName == "페이드인") {
 			float period = 2.0f;
 			if (actionNode.Attributes["value"] != null) {
@@ -24,6 +25,8 @@ public class BDAction {
 			}else {
 				return new BDActionFadeInOut(period, false);
 			}
+		}else if (actionName == "카메라애니메이션") {
+			return new BDActionCameraMove();
 		}
 		return null;
 	}
@@ -36,6 +39,38 @@ public class BDAction {
 		set { this.name = Name; }
 	}
 
+}
+
+public class BDActionCameraMove: BDAction {
+	private static Animator animator = null;
+	private static Camera camera = null;
+	public static void setMainCamera(Camera camera) {
+		BDActionCameraMove.camera = camera;
+	}
+	public BDActionCameraMove() {
+		if (camera != null) {
+			Animator currAnimator = camera.GetComponent<Animator>();
+			if (currAnimator == null) {
+				currAnimator = camera.gameObject.AddComponent<Animator>();
+			}
+			RuntimeAnimatorController animatorController = Resources.Load<RuntimeAnimatorController>("CameraAnimation/MainCamera");
+//			currAnimator.runtimeAnimatorController = Resources.Load("Assets/BlackDeerEngine/CameraAnimation/Main Camera.controller") as RuntimeAnimatorController;
+			if (animatorController == null) {
+				Debug.Log("runtime animator load error");
+			}else {
+				currAnimator.runtimeAnimatorController = animatorController;
+			}
+			animator = currAnimator;
+		}
+	}
+
+	public override void start(CompletionDelegate completionDelegate) {
+		if (camera == null || animator == null) {
+			Debug.Log("camera == null || animator == null");
+			return;
+		}
+		animator.Play("sample00", 0);
+	}
 }
 
 public class BDActionFadeInOut: BDAction {

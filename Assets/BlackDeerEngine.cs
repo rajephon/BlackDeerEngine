@@ -11,6 +11,7 @@ using System;
 public class BlackDeerEngine : MonoBehaviour {
 	// UISetting
 	public GameObject fadePanel = null;
+	public Camera mainCamera = null;
 	public class GameProgress {
 		public int stage;
 		public int episode;
@@ -49,6 +50,8 @@ public class BlackDeerEngine : MonoBehaviour {
 	private void initEnvironment() {
 		BDFadeInOut bdFadeInOut = fadePanel.AddComponent<BDFadeInOut>();
 		BDActionFadeInOut.setFadePanel(bdFadeInOut);
+		CameraAnimCallbackListener cameraAnimCallbackListener = mainCamera.gameObject.AddComponent<CameraAnimCallbackListener>();
+		BDActionCameraMove.setMainCamera(mainCamera);
 	}
 
 	IEnumerator LoadXMLResource() {
