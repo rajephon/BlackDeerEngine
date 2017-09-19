@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraAnimCallbackListener : MonoBehaviour {
-
+public class BDCameraAnimCallback : MonoBehaviour {
+	private BDAction.CompletionDelegate completionDelegate = null;
 	// Use this for initialization
 	void Start () {
 		
@@ -16,5 +16,8 @@ public class CameraAnimCallbackListener : MonoBehaviour {
 
 	void animationFinish() {
 		Debug.Log("AnimationFinish");
+		if (completionDelegate != null) {
+			completionDelegate();
+		}
 	}
 }
