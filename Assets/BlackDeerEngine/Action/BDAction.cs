@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Xml;
 
 public class BDAction {
@@ -33,6 +34,12 @@ public class BDAction {
 				Debug.Log("cameraName == null || animName == null");
 			}
 			return new BDActionCameraMove(cameraName, animName);
+		}else if (actionName == "대화") {
+			string chatMessage = actionNode.Attributes["value"].Value;
+			if (chatMessage == null) {
+				Debug.Log("chatMessage == null");
+			}
+			return new BDActionChatMessage(chatMessage);
 		}
 		return null;
 	}
@@ -45,6 +52,28 @@ public class BDAction {
 		set { this.name = Name; }
 	}
 
+}
+
+public class BDActionChatMessage: BDAction {
+	private static Text txtChatbox = null;
+	private static BDNextActionButton nextActionButton = null;
+	private string chatMessage = "";
+	public static void setTxtChatbox(Text txtChatbox, BDNextActionButton nextActionButton) {
+		BDActionChatMessage.txtChatbox = txtChatbox;
+		BDActionChatMessage.nextActionButton = nextActionButton;
+	}
+	public BDActionChatMessage(string chatMessage) {
+		if (chatMessage != null) {
+			this.chatMessage = chatMessage;
+		}
+	}
+	public override void start(CompletionDelegate completionDelegate) {
+		if (txtChatbox == null || chatMessage == null) {
+			return;
+		}
+		nextActionButton.setCompletionDelegate(completionDelegate);
+		txtChatbox.text = chatMessage;
+	}
 }
 
 public class BDActionCameraMove: BDAction {

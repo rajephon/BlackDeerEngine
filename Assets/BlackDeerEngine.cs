@@ -12,6 +12,8 @@ public class BlackDeerEngine : MonoBehaviour {
 	// UISetting
 	public GameObject fadePanel = null;
 	public Camera mainCamera = null;
+	public Text txtChatbox = null;
+	public Button buttonNextAction = null;
 	public class GameProgress {
 		public int stage;
 		public int episode;
@@ -48,10 +50,23 @@ public class BlackDeerEngine : MonoBehaviour {
 	}
 
 	private void initEnvironment() {
-		BDFadeInOut bdFadeInOut = fadePanel.AddComponent<BDFadeInOut>();
-		BDActionFadeInOut.setFadePanel(bdFadeInOut);
+		if (fadePanel != null) {
+			BDFadeInOut bdFadeInOut = fadePanel.AddComponent<BDFadeInOut>();
+			BDActionFadeInOut.setFadePanel(bdFadeInOut);
+		}else {
+			Debug.LogError("fadePanel == null");
+		}
+
 		BDCameraAnimCallback cameraAnimCallbackListener = mainCamera.gameObject.AddComponent<BDCameraAnimCallback>();
+
 		// BDActionCameraMove.setMainCamera(mainCamera);
+		if (buttonNextAction != null) {
+			BDNextActionButton nextActionButton = buttonNextAction.gameObject.AddComponent<BDNextActionButton>();
+			buttonNextAction.onClick.AddListener(nextActionButton.onClicked);
+			BDActionChatMessage.setTxtChatbox(txtChatbox, nextActionButton);
+		}else {
+			Debug.LogError("buttonNextAction == null");
+		}
 	}
 
 	IEnumerator LoadXMLResource() {
