@@ -5,9 +5,8 @@
             <scene no="1" isIntro="true">
                     <action name="페이드인" value="2"></action>
                     <action name="카메라애니메이션" value="메인카메라" value2="sample00"></action>
-                    
                     <action name="대화" value="메세지 테스트"></action>
-                    <!-- <action name="페이드아웃" value="2"></action> -->
+                    <action name="페이드아웃" value="2"></action>
                     <!-- <action name="playbgm" value="investigation_main.mp3" ></action>
                     <action name="setPlaceWindow"  value="설원" ></action>
                     <action name="effectSound" value="뽀드득.mp3" ></action>

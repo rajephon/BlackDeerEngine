@@ -29,6 +29,9 @@ public class BDFadeInOut : MonoBehaviour {
 				}
 				fade.color = new Color ( 0, 0, 0, fades);
 			}else {
+				if (fadeMode != 2) {
+					this.gameObject.SetActive(false);
+				}
 				fadeMode = 0;
 				time = 0;
 				if (completionDelegate != null) {
@@ -39,6 +42,7 @@ public class BDFadeInOut : MonoBehaviour {
 	}
 
 	public void startFadeIn(float period, BDAction.CompletionDelegate completionDelegate) {
+		this.gameObject.SetActive(true);
 		if (period == 0) {
 			period = 0.1f;
 		}
@@ -49,6 +53,7 @@ public class BDFadeInOut : MonoBehaviour {
 	}
 
 	public void startFadeOut(float period, BDAction.CompletionDelegate completionDelegate) {
+		this.gameObject.SetActive(true);
 		if (period == 0) {
 			period = 0.1f;
 		}

@@ -14,6 +14,8 @@ public class BlackDeerEngine : MonoBehaviour {
 	public Camera mainCamera = null;
 	public Text txtChatbox = null;
 	public Button buttonNextAction = null;
+
+	public Canvas mainCanavas = null;
 	public class GameProgress {
 		public int stage;
 		public int episode;
@@ -50,6 +52,23 @@ public class BlackDeerEngine : MonoBehaviour {
 	}
 
 	private void initEnvironment() {
+		if (mainCanavas != null) {
+			RectTransform canvasRect = mainCanavas.gameObject.GetComponent<RectTransform>();
+
+			// create fadePanel
+			GameObject fadePanel = new GameObject();
+			fadePanel.name = "BDFadePanel";
+			Image NewImage = fadePanel.AddComponent<Image>();
+			// NewObj.GetComponent<RectTransform>().SetParent(mainCanavas.game); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+			fadePanel.transform.SetParent(mainCanavas.transform);
+			fadePanel.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
+			fadePanel.GetComponent<RectTransform>().localPosition = new Vector2(0,0);
+			fadePanel.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(0,0,0,0.0f);
+			fadePanel.SetActive(false); //Activate the GameObject
+			this.fadePanel = fadePanel;
+		}else {
+			Debug.LogError("mainCanvas == null");
+		}
 		if (fadePanel != null) {
 			BDFadeInOut bdFadeInOut = fadePanel.AddComponent<BDFadeInOut>();
 			BDActionFadeInOut.setFadePanel(bdFadeInOut);
