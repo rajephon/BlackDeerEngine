@@ -27,7 +27,6 @@ public class BDAction {
 				return new BDActionFadeInOut(period, false);
 			}
 		}else if (actionName == "카메라애니메이션") {
-			// <action name="카메라애니메이션" value="메인카메라" value2="sample00"></action>
 			string cameraName = actionNode.Attributes["value"].Value;
 			string animName = actionNode.Attributes["value2"].Value;
 			if (cameraName == null || animName == null) {
@@ -64,6 +63,11 @@ public class BDActionChatEnable: BDAction {
 	private bool isVisible = true;
 	public BDActionChatEnable(bool isVisible) {
 		this.isVisible = isVisible;
+	}
+	public static void setTxtChatbox(Text txtChatbox, BDNextActionButton nextActionButton, bool isVisible) {
+		setTxtChatbox(txtChatbox, nextActionButton);
+		txtChatbox.enabled = isVisible;
+		nextActionButton.setHidden(isVisible);
 	}
 	public static void setTxtChatbox(Text txtChatbox, BDNextActionButton nextActionButton) {
 		BDActionChatEnable.txtChatbox = txtChatbox;

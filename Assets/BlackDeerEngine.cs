@@ -10,7 +10,7 @@ using System;
 
 public class BlackDeerEngine : MonoBehaviour {
 	// UISetting
-	public GameObject fadePanel = null;
+	private GameObject fadePanel = null;
 	public Camera mainCamera = null;
 	public Text txtChatbox = null;
 	public Button buttonNextAction = null;
@@ -58,8 +58,7 @@ public class BlackDeerEngine : MonoBehaviour {
 			// create fadePanel
 			GameObject fadePanel = new GameObject();
 			fadePanel.name = "BDFadePanel";
-			Image NewImage = fadePanel.AddComponent<Image>();
-			// NewObj.GetComponent<RectTransform>().SetParent(mainCanavas.game); //Assign the newly created Image GameObject as a Child of the Parent Panel.
+			fadePanel.AddComponent<Image>();
 			fadePanel.transform.SetParent(mainCanavas.transform);
 			fadePanel.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
 			fadePanel.GetComponent<RectTransform>().localPosition = new Vector2(0,0);
@@ -76,14 +75,13 @@ public class BlackDeerEngine : MonoBehaviour {
 			Debug.LogError("fadePanel == null");
 		}
 
-		BDCameraAnimCallback cameraAnimCallbackListener = mainCamera.gameObject.AddComponent<BDCameraAnimCallback>();
+		mainCamera.gameObject.AddComponent<BDCameraAnimCallback>();
 
-		// BDActionCameraMove.setMainCamera(mainCamera);
 		if (buttonNextAction != null) {
 			BDNextActionButton nextActionButton = buttonNextAction.gameObject.AddComponent<BDNextActionButton>();
 			buttonNextAction.onClick.AddListener(nextActionButton.onClicked);
 			BDActionChatMessage.setTxtChatbox(txtChatbox, nextActionButton);
-			BDActionChatEnable.setTxtChatbox(txtChatbox, nextActionButton);
+			BDActionChatEnable.setTxtChatbox(txtChatbox, nextActionButton, false);
 		}else {
 			Debug.LogError("buttonNextAction == null");
 		}
@@ -144,11 +142,7 @@ public class BlackDeerEngine : MonoBehaviour {
 		};
 		BDAction bdAction = BDAction.create(actionNode);
 		bdAction.start(completion);
-		// Pro ->
-		// 자동으로 다음 액션으로 넘어가도 되는 것이 있지만, 그렇지 않은 액션이 있다.
-		// 액션의 구분은 BDAction 내부에서 이루어진다.
-		// delegate callback도 짜피 액션의 종류에 의해이루어진다.
-		// chatbox와 같이 자동으로 넘어가면 안되는 액션에서 completion을 무시하면 되지않을까?
+		
 	}
 
 }
