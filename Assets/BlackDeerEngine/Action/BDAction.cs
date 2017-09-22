@@ -40,6 +40,10 @@ public class BDAction {
 				Debug.Log("chatMessage == null");
 			}
 			return new BDActionChatMessage(chatMessage);
+		}else if (actionName == "대화보이기") {
+			return new BDActionChatEnable(true);
+		}else if (actionName == "대화감추기") {
+			return new BDActionChatEnable(false);
 		}
 		return null;
 	}
@@ -52,6 +56,27 @@ public class BDAction {
 		set { this.name = Name; }
 	}
 
+}
+
+public class BDActionChatEnable: BDAction {
+	private static Text txtChatbox = null;
+	private static BDNextActionButton nextActionButton = null;
+	private bool isVisible = true;
+	public BDActionChatEnable(bool isVisible) {
+		this.isVisible = isVisible;
+	}
+	public static void setTxtChatbox(Text txtChatbox, BDNextActionButton nextActionButton) {
+		BDActionChatEnable.txtChatbox = txtChatbox;
+		BDActionChatEnable.nextActionButton = nextActionButton;
+	}
+	public override void start(CompletionDelegate completionDelegate) {
+		txtChatbox.enabled = isVisible;
+		nextActionButton.setHidden(isVisible);
+
+		if (completionDelegate != null) {
+			completionDelegate();
+		}
+	}
 }
 
 public class BDActionChatMessage: BDAction {
@@ -72,6 +97,7 @@ public class BDActionChatMessage: BDAction {
 			return;
 		}
 		nextActionButton.setCompletionDelegate(completionDelegate);
+		nextActionButton.setEnabled(true);
 		txtChatbox.text = chatMessage;
 	}
 }

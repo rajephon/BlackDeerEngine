@@ -83,6 +83,7 @@ public class BlackDeerEngine : MonoBehaviour {
 			BDNextActionButton nextActionButton = buttonNextAction.gameObject.AddComponent<BDNextActionButton>();
 			buttonNextAction.onClick.AddListener(nextActionButton.onClicked);
 			BDActionChatMessage.setTxtChatbox(txtChatbox, nextActionButton);
+			BDActionChatEnable.setTxtChatbox(txtChatbox, nextActionButton);
 		}else {
 			Debug.LogError("buttonNextAction == null");
 		}

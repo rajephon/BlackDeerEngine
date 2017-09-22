@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BDNextActionButton : MonoBehaviour {
 	BDAction.CompletionDelegate completionDelegate = null;
@@ -18,8 +19,9 @@ public class BDNextActionButton : MonoBehaviour {
 	public void onClicked() {
 		if (completionDelegate != null) {
 			Debug.Log("onClicked");
+			this.setEnabled(false);
 			completionDelegate();
-			completionDelegate = null;
+			// completionDelegate = null;
 		}else {
 			Debug.Log("onClicked. but completionDelegate is null");
 		}
@@ -28,5 +30,14 @@ public class BDNextActionButton : MonoBehaviour {
 
 	public void setCompletionDelegate(BDAction.CompletionDelegate completionDelegate) {
 		this.completionDelegate = completionDelegate;
+	}
+
+	public void setEnabled(bool isEnabled) {
+		// htisinteractiable
+		this.GetComponent<Button>().interactable = isEnabled;
+	}
+
+	public void setHidden(bool isHide) {
+		this.gameObject.SetActive(isHide);
 	}
 }
