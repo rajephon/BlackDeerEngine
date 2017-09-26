@@ -15,7 +15,7 @@ public class BlackDeerEngine : MonoBehaviour {
 	public Text txtChatbox = null;
 	public Button buttonNextAction = null;
 
-	public Canvas mainCanavas = null;
+	public Canvas mainCanvas = null;
 	public class GameProgress {
 		public int stage;
 		public string map;
@@ -52,7 +52,7 @@ public class BlackDeerEngine : MonoBehaviour {
 			return false;
 		}
 	}
-	public string m_strName = "xml/SampleScript.xml";
+	public string scriptPath = "xml/SampleScript.xml";
 	private static GameProgress gameProgress;
 	private XmlDocument xmlDoc;
 	// Use this for initialization
@@ -68,14 +68,14 @@ public class BlackDeerEngine : MonoBehaviour {
 	}
 
 	private void initEnvironment() {
-		if (mainCanavas != null) {
-			RectTransform canvasRect = mainCanavas.gameObject.GetComponent<RectTransform>();
+		if (mainCanvas != null) {
+			RectTransform canvasRect = mainCanvas.gameObject.GetComponent<RectTransform>();
 
 			// create fadePanel
 			GameObject fadePanel = new GameObject();
 			fadePanel.name = "BDFadePanel";
 			fadePanel.AddComponent<Image>();
-			fadePanel.transform.SetParent(mainCanavas.transform);
+			fadePanel.transform.SetParent(mainCanvas.transform);
 			fadePanel.GetComponent<RectTransform>().sizeDelta = new Vector2(canvasRect.rect.width, canvasRect.rect.height);
 			fadePanel.GetComponent<RectTransform>().localPosition = new Vector2(0,0);
 			fadePanel.gameObject.GetComponent<UnityEngine.UI.Image>().color = new Color(0,0,0,0.0f);
@@ -114,7 +114,7 @@ public class BlackDeerEngine : MonoBehaviour {
 		#if (UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS)
 			Debug.Log("UNITY_EDITOR");
 			strPath += ("file:///");
-			strPath += (Application.streamingAssetsPath + "/" + m_strName);
+			strPath += (Application.streamingAssetsPath + "/" + scriptPath);
 		#elif UNITY_ANDROID
 			strPath =  "jar:file://" + Application.dataPath + "!/assets/" + m_strName;
 		#endif
