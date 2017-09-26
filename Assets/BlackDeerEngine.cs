@@ -18,32 +18,48 @@ public class BlackDeerEngine : MonoBehaviour {
 	public Canvas mainCanavas = null;
 	public class GameProgress {
 		public int stage;
-		public int episode;
-		public string place;
-		public int scene;
+		public string map;
+		public int cutscene;
 		public int action;
-		public GameProgress(int stage, int episode, string place, int scene, int action) {
+		public GameProgress(int stage, string map, int cutscene, int action) {
 			this.stage = stage;
-			this.episode = episode;
-			this.place = place;
-			this.scene = scene;
+			this.map = map;
+			this.cutscene = cutscene;
 			this.action = action;
 		}
 		public string getXPath() {
-			return getXPath(stage, episode, place, scene, action);
+			return getXPath(stage, map, cutscene, action);
 		}
-		public string getXPath(int stage, int episode, string place, int scene, int action) {
-			return "stage[@value=\""+stage+"\"]/episode[@value = \""+episode+"\"]/place[@name=\""+place+"\"]/scene[@no=\""+scene+"\"]/action["+action+"]";
+		public string getXPath(int stage, string map, int cutscene, int action) {
+			return "stage[@value=\""+stage+"\"]/map[@name=\""+map+"\"]/cutscene[@no=\""+cutscene+"\"]/action["+action+"]";
+		}
+		public bool isIntro(XmlDocument xmlDoc) {
+			if (xmlDoc == null) {
+				Debug.Log("XmlDoc is null");
+				return false;
+			}
+			XmlNode cutsceneNode = xmlDoc.SelectSingleNode("stage[@value=\""+stage+"\"]/map[@name=\""+map+"\"]/cutscene[@no=\""+cutscene+"\"]");
+			if (cutsceneNode == null) {
+				Debug.Log("CutsceneNode is null");
+				return false;
+			}
+			if (cutsceneNode.Attributes["isIntro"] == null) {
+				return false;
+			}
+			string isIntro = cutsceneNode.Attributes["isIntro"].Value;
+			if (isIntro == "true")
+				return true;
+			return false;
 		}
 	}
-	public string m_strName = "xml/SampleEpisode.xml";
+	public string m_strName = "xml/SampleScript.xml";
 	private static GameProgress gameProgress;
 	private XmlDocument xmlDoc;
 	// Use this for initialization
 	void Start () {
-		gameProgress = new GameProgress(1, 1, "설원", 1, 1);
-		StartCoroutine(LoadXMLResource());
+		gameProgress = new GameProgress(1, "설원", 1, 1);
 		initEnvironment();
+		StartCoroutine(LoadXMLResource());
 	}
 	
 	// Update is called once per frame
@@ -113,8 +129,10 @@ public class BlackDeerEngine : MonoBehaviour {
 
 		xmlDoc = new XmlDocument();
 		xmlDoc.LoadXml(stringReader.ReadToEnd());
-		// Interpret(www.text);
-		progress();
+		
+		if (gameProgress.isIntro(xmlDoc)) {
+			progress();
+		}
 	}
 	private void printError(string msg) {
 		Debug.Log(msg + " (XPath: "+gameProgress.getXPath()+")");
