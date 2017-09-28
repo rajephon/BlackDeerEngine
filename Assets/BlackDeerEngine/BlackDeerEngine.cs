@@ -12,7 +12,7 @@ public class BlackDeerEngine : MonoBehaviour {
 	// UISetting
 	private GameObject fadePanel = null;
 	public Camera mainCamera = null;
-	public Text txtChatbox = null;
+	// public Text txtChatbox = null;
 	public Button buttonNextAction = null;
 
 	public Canvas mainCanvas = null;
@@ -96,8 +96,10 @@ public class BlackDeerEngine : MonoBehaviour {
 		if (buttonNextAction != null) {
 			BDNextActionButton nextActionButton = buttonNextAction.gameObject.AddComponent<BDNextActionButton>();
 			buttonNextAction.onClick.AddListener(nextActionButton.onClicked);
-			BDActionChatMessage.setTxtChatbox(txtChatbox, nextActionButton);
-			BDActionChatEnable.setTxtChatbox(txtChatbox, nextActionButton, false);
+			if (mainCanvas != null) {
+				BDActionChatMessage.setTxtChatbox(nextActionButton, mainCanvas);
+			}
+			BDActionChatEnable.setTxtChatbox(nextActionButton, false);
 		}else {
 			Debug.LogError("buttonNextAction == null");
 		}

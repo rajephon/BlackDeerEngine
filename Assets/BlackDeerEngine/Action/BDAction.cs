@@ -34,11 +34,11 @@ public class BDAction {
 			}
 			return new BDActionCameraMove(cameraName, animName);
 		}else if (actionName == "대화") {
-			string chatMessage = actionNode.Attributes["value"].Value;
-			if (chatMessage == null) {
+			string speakerName = actionNode.Attributes["value"].Value;
+			if (speakerName == null)
 				Debug.Log("chatMessage == null");
-			}
-			return new BDActionChatMessage(chatMessage);
+			string chatMessage = actionNode.Attributes["value2"].Value;
+			return new BDActionChatMessage(speakerName, chatMessage);
 		}else if (actionName == "대화보이기") {
 			return new BDActionChatEnable(true);
 		}else if (actionName == "대화감추기") {
@@ -58,25 +58,20 @@ public class BDAction {
 }
 
 public class BDActionChatEnable: BDAction {
-	private static Text txtChatbox = null;
 	private static BDNextActionButton nextActionButton = null;
 	private bool isVisible = true;
 	public BDActionChatEnable(bool isVisible) {
 		this.isVisible = isVisible;
 	}
-	public static void setTxtChatbox(Text txtChatbox, BDNextActionButton nextActionButton, bool isVisible) {
-		setTxtChatbox(txtChatbox, nextActionButton);
-		txtChatbox.enabled = isVisible;
+	public static void setTxtChatbox(BDNextActionButton nextActionButton, bool isVisible) {
+		setTxtChatbox(nextActionButton);
 		nextActionButton.setHidden(isVisible);
 	}
-	public static void setTxtChatbox(Text txtChatbox, BDNextActionButton nextActionButton) {
-		BDActionChatEnable.txtChatbox = txtChatbox;
+	public static void setTxtChatbox(BDNextActionButton nextActionButton) {
 		BDActionChatEnable.nextActionButton = nextActionButton;
 	}
 	public override void start(CompletionDelegate completionDelegate) {
-		txtChatbox.enabled = isVisible;
 		nextActionButton.setHidden(isVisible);
-
 		if (completionDelegate != null) {
 			completionDelegate();
 		}
@@ -87,11 +82,19 @@ public class BDActionChatMessage: BDAction {
 	private static Text txtChatbox = null;
 	private static BDNextActionButton nextActionButton = null;
 	private string chatMessage = "";
-	public static void setTxtChatbox(Text txtChatbox, BDNextActionButton nextActionButton) {
-		BDActionChatMessage.txtChatbox = txtChatbox;
+	public static void setTxtChatbox(BDNextActionButton nextActionButton, Canvas canvas) {
 		BDActionChatMessage.nextActionButton = nextActionButton;
+		BDChatMessage.setCanvas(canvas);
 	}
-	public BDActionChatMessage(string chatMessage) {
+	public BDActionChatMessage(string speakerName, string chatMessage) {
+		// GameObject speaker = GameObject.Find(speaker);
+		GameObject speaker = GameObject.Find(speakerName);
+		if (speaker != null) {
+			// TODO: add label with text
+			txtChatbox = BDChatMessage.createChatbubble(speaker, chatMessage);
+		}else {
+			Debug.Log("speaker is null");
+		}
 		if (chatMessage != null) {
 			this.chatMessage = chatMessage;
 		}
@@ -102,7 +105,6 @@ public class BDActionChatMessage: BDAction {
 		}
 		nextActionButton.setCompletionDelegate(completionDelegate);
 		nextActionButton.setEnabled(true);
-		txtChatbox.text = chatMessage;
 	}
 }
 
