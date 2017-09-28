@@ -65,13 +65,13 @@ public class BDActionChatEnable: BDAction {
 	}
 	public static void setTxtChatbox(BDNextActionButton nextActionButton, bool isVisible) {
 		setTxtChatbox(nextActionButton);
-		nextActionButton.setHidden(isVisible);
+		nextActionButton.setHidden(!isVisible);
 	}
 	public static void setTxtChatbox(BDNextActionButton nextActionButton) {
 		BDActionChatEnable.nextActionButton = nextActionButton;
 	}
 	public override void start(CompletionDelegate completionDelegate) {
-		nextActionButton.setHidden(isVisible);
+		nextActionButton.setHidden(!isVisible);
 		if (completionDelegate != null) {
 			completionDelegate();
 		}
@@ -79,7 +79,7 @@ public class BDActionChatEnable: BDAction {
 }
 
 public class BDActionChatMessage: BDAction {
-	private static Text txtChatbox = null;
+	private static GameObject txtChatbox = null;
 	private static BDNextActionButton nextActionButton = null;
 	private string chatMessage = "";
 	public static void setTxtChatbox(BDNextActionButton nextActionButton, Canvas canvas) {
@@ -103,7 +103,14 @@ public class BDActionChatMessage: BDAction {
 		if (txtChatbox == null || chatMessage == null) {
 			return;
 		}
-		nextActionButton.setCompletionDelegate(completionDelegate);
+		txtChatbox.GetComponent<Text>().enabled = true;
+		nextActionButton.setCompletionDelegate(delegate () {
+			if (txtChatbox != null) {
+				Object.Destroy(txtChatbox.gameObject);
+			}
+			completionDelegate();
+		});
+		nextActionButton.setHidden(false);
 		nextActionButton.setEnabled(true);
 	}
 }

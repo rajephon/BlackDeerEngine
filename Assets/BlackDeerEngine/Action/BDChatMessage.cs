@@ -19,7 +19,7 @@ public class BDChatMessage : MonoBehaviour {
 		BDChatMessage.canvas = canvas;
 	}
 
-	static public Text createChatbubble(GameObject targetObj, string message) {
+	static public GameObject createChatbubble(GameObject targetObj, string message) {
 		if (canvas == null) {
 			Debug.Log("canvas == null");
 			return null;
@@ -35,12 +35,19 @@ public class BDChatMessage : MonoBehaviour {
 		txtComponent.font = (Font)Resources.Load("Fonts/NanumGothic");
 		txtComponent.color = new Color(0,0,0,1);
 		txtComponent.alignment = TextAnchor.MiddleCenter;
+
+		Outline outline = chatBoxObj.gameObject.AddComponent<Outline>();
+		outline.effectColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
 		Debug.Log(targetObj.transform.position);
 		Vector3 convertedPosition = Camera.main.WorldToScreenPoint(targetObj.transform.position);
 		chatBoxObj.transform.position = new Vector3(convertedPosition.x, convertedPosition.y+40.0f);
-		chatBoxObj.transform.parent = canvas.transform;
 		// size
 		chatBoxObj.GetComponent<RectTransform>().sizeDelta = new Vector2(240, 60);
-		return txtComponent;
+		
+		txtComponent.enabled = false;
+
+		chatBoxObj.transform.parent = canvas.transform;
+		return chatBoxObj;
 	}
 }

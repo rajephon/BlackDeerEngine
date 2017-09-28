@@ -38,6 +38,6 @@ public class BDNextActionButton : MonoBehaviour {
 	}
 
 	public void setHidden(bool isHide) {
-		this.gameObject.SetActive(isHide);
+		this.gameObject.SetActive(!isHide);
 	}
 }
