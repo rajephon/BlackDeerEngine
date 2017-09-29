@@ -12,5 +12,5 @@
                 <!-- <action name="페이드아웃" value="2"></action> -->
         </cutscene>
     </map>
-    <!-- <clear con="위치도달" value="어머니"></clear> -->
+    <clear con="위치도달"></clear>
 </stage>

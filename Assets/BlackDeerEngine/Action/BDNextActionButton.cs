@@ -20,6 +20,7 @@ public class BDNextActionButton : MonoBehaviour {
 		if (completionDelegate != null) {
 			Debug.Log("onClicked");
 			this.setEnabled(false);
+			this.setHidden(true);
 			completionDelegate();
 			// completionDelegate = null;
 		}else {
