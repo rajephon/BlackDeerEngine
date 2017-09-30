@@ -83,8 +83,8 @@ public class BlackDeerEngine : MonoBehaviour {
 	// Delegate
 	public delegate void StageClearDelegate(GameProgress gameProgress);
 	public delegate void BlockUserControlDelegate(bool isBlocked);
-	private StageClearDelegate delegateStageClear;
-	public StageClearDelegate DelegateStageClear {
+	private static StageClearDelegate delegateStageClear;
+	public static StageClearDelegate DelegateStageClear {
 		get {
 			return delegateStageClear;
 		}
@@ -92,8 +92,8 @@ public class BlackDeerEngine : MonoBehaviour {
 			delegateStageClear = value;
 		}
 	}
-	private BlockUserControlDelegate delegateBlockUserControl;
-	public BlockUserControlDelegate DelegateBlockUserControl {
+	private static BlockUserControlDelegate delegateBlockUserControl;
+	public static BlockUserControlDelegate DelegateBlockUserControl {
 		get {
 			return delegateBlockUserControl;
 		}
