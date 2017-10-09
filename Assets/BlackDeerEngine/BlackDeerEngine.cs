@@ -8,7 +8,8 @@ using System.Xml;
 using System.Text;
 using System;
 
-public class BlackDeerEngine : MonoBehaviour {
+public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
+	protected BlackDeerEngine () {}
 	private GameObject fadePanel = null;
 	public GameObject playerObject;
 	public Camera mainCamera = null;
@@ -29,6 +30,14 @@ public class BlackDeerEngine : MonoBehaviour {
 			this.cutscene = cutscene;
 			this.action = action;
 		}
+
+		public void setProgressStep(int stage, string map, int cutscene, int action) {
+			this.stage = stage;
+			this.map = map;
+			this.cutscene = cutscene;
+			this.action = action;
+		}
+
 		public string getXPath() {
 			return getXPath(stage, map, cutscene, action);
 		}
@@ -77,14 +86,16 @@ public class BlackDeerEngine : MonoBehaviour {
 		}
 	}
 
-	private static GameProgress gameProgress;
+	private GameProgress gameProgress;
 	private XmlDocument xmlDoc;
+	private bool isProgressing = false;
 
 	// Delegate
 	public delegate void StageClearDelegate(GameProgress gameProgress);
 	public delegate void BlockUserControlDelegate(bool isBlocked);
-	private static StageClearDelegate delegateStageClear;
-	public static StageClearDelegate DelegateStageClear {
+	public delegate void LoadCompleteDelegate();
+	private StageClearDelegate delegateStageClear;
+	public StageClearDelegate DelegateStageClear {
 		get {
 			return delegateStageClear;
 		}
@@ -92,8 +103,8 @@ public class BlackDeerEngine : MonoBehaviour {
 			delegateStageClear = value;
 		}
 	}
-	private static BlockUserControlDelegate delegateBlockUserControl;
-	public static BlockUserControlDelegate DelegateBlockUserControl {
+	private BlockUserControlDelegate delegateBlockUserControl;
+	public BlockUserControlDelegate DelegateBlockUserControl {
 		get {
 			return delegateBlockUserControl;
 		}
@@ -101,7 +112,18 @@ public class BlackDeerEngine : MonoBehaviour {
 			delegateBlockUserControl = value;
 		}
 	}
-
+	private LoadCompleteDelegate loadCompleteDelegate;
+	public LoadCompleteDelegate DelegateLoadComplete {
+		get {
+			return loadCompleteDelegate;
+		}
+		set {
+			loadCompleteDelegate = value;
+		}
+	}
+	public void setProgressStep(int stage, string map, int cutscene, int action) {
+		gameProgress.setProgressStep(stage, map, cutscene, action);
+	}
 	// Use this for initialization
 	void Start () {
 		gameProgress = new GameProgress(1, "설원", 1, 1);
@@ -178,40 +200,49 @@ public class BlackDeerEngine : MonoBehaviour {
 		string strPath = string.Empty;
 		// 플랫폼 처리
 		// #if ( UNITY_EDI)
-		#if (UNITY_EDITOR || UNITY_IOS || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN)
-      		// Debug.Log("Unity Editor");
-    	#endif
-
 		#if (UNITY_EDITOR || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS)
 			Debug.Log("UNITY_EDITOR");
-			strPath += ("file:///");
+			strPath += ("file://");
 			strPath += (Application.streamingAssetsPath + "/" + scriptPath);
 		#elif UNITY_ANDROID
 			strPath =  "jar:file://" + Application.dataPath + "!/assets/" + m_strName;
 		#endif
-		Debug.Log("strPath: " + strPath);
-		WWW www = new WWW(strPath);
 
+		Debug.Log("strPath: " + strPath);
+		
+		if (File.Exists(strPath)) {
+			Debug.Log("Exists true");
+		}else {
+			Debug.Log("Exists false");
+		}
+
+		WWW www = new WWW(strPath);
 		while(!www.isDone)
 			yield return www;
 
 		Debug.Log("Read Content: " + www.text.Length);
-
 		StringReader stringReader = new StringReader(www.text);
 
 		xmlDoc = new XmlDocument();
 		xmlDoc.LoadXml(stringReader.ReadToEnd());
 
 		initEnvironment();
-		startProgress();
-	}
-
-	void startProgress() {
-		if (gameProgress.isIntro(xmlDoc)) {
-			progress();
+		// if (gameProgress.isIntro(xmlDoc)) {
+			// startProgress();
+		// }
+		if (loadCompleteDelegate != null) {
+			loadCompleteDelegate();
 		}
 	}
 
+	public void startProgress() {
+		isProgressing = true;
+		progress();
+	}
+	public void stopProgress() {
+		isProgressing = false;
+		// TODO: remove progress 
+	}
 	private void printError(string msg) {
 		Debug.Log(msg + " (XPath: "+gameProgress.getXPath()+")");
 	}
@@ -240,11 +271,11 @@ public class BlackDeerEngine : MonoBehaviour {
 		BDAction.CompletionDelegate completion = delegate() {
 			Debug.Log("Next Action!!");
 			gameProgress.action++;
-			progress();
+			if (isProgressing) {
+				progress();
+			}
 		};
 		BDAction bdAction = BDAction.create(actionNode);
 		bdAction.start(completion);
-		
 	}
-
 }
