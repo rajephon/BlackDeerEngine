@@ -28,7 +28,7 @@
 
 **Destination Pos** : XML스크립트의 스테이지 클리어 조건에 위치도달이 있을 경우, 도달여부를 체크할 도착지 위치의 GameObject를 연결
 
-**Timeline Object** : Timeline을 관리하는 GameObject를 연결
+**Timeline Object** : [Timeline](#timeline)을 관리하는 GameObject를 연결
 
 ------
 
