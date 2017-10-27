@@ -32,5 +32,52 @@
 
 ------
 
+## Delegate
+
+### Define
+```C#
+public delegate void StageClearDelegate(GameProgress gameProgress);
+public delegate void BlockUserControlDelegate(bool isBlocked);
+```
+
+### public delegate void LoadCompleteDelegate();
+BlackDeerEngine의 초기화가 모두 끝날 때 불리는 콜백입니다.
+
+### public delegate void StageClearDelegate(GameProgress gameProgress);
+스테이지 클리어조건 달성 시 불리는 콜백입니다.
+
+### public delegate void BlockUserControlDelegate(bool isBlocked);
+Action 동작 시작으로 사용자의 조작이 막혀야 하는 상황인지 아닌지에 대한 콜백입니다.
+
+기본적으로 cutscene이 시작할 때 true, 끝날 때 false 콜백이 옵니다.
+
+### Example
+```C#
+BlackDeerEngine.Instance.DelegateStageClear = delegate(BlackDeerEngine.GameProgress gameProgress) {
+	Debug.Log(gameProgress.stage+ " STAGE CLEAR");
+};
+BlackDeerEngine.Instance.DelegateBlockUserControl = delegate(bool uiblocked) {
+	 Debug.Log("UIBlockedMode: "+uiblocked);
+};
+BlackDeerEngine.Instance.DelegateLoadComplete = delegate() {
+	BlackDeerEngine.Instance.setProgressStep(1, "설원", 2, 1);
+	Debug.Log("Load Complete");
+	BlackDeerEngine.Instance.startProgress();
+};
+```
+------
 
 ## Timeline
+역동적인 컷신을 만들기 위해 활용합니다. 
+
+### Timeline Object 생성
+1. Menu - GameObject - Create Empty 로 빈 오브젝트를 생성합니다. 이름은 임의로 정하셔도 됩니다.
+2. 해당 오브젝트 Component에 **Playable Director**와 **Animator**를 추가합니다.
+
+### Timeline 만들기
+1. Timeline Object가 클릭된 채로 Timeline Tab을 선택합니다.
+2. Playable옵션에 특별히 지정된 Timeline이 없을 경우, **Create**버튼이 활성화되어있습니다. 해당 버튼을 클릭하여 생성합니다. 생성되는 Timeline 파일의 위치는 Resources/Timeline/ 디렉토리 안으로 합니다.
+
+------
+
+
