@@ -13,7 +13,7 @@
 - public variable 세팅
 
 <p align="center">
-  <img src="https://github.com/rajephon/BlackDeerEngine/blob/document/Document/BlackDeerEngineComponent.png" width="299" />
+  <img src="https://github.com/rajephon/BlackDeerEngine/blob/master/Document/BlackDeerEngineComponent.png" width="299" />
 </p>
 
 **Player Object** : Scene내 플레이어의 Object를 연결합니다. 위치 도달 등을 확인할 때 사용됩니다.
