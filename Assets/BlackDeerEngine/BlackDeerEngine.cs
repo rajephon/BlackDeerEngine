@@ -18,6 +18,7 @@ public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
 
 	public string scriptPath = "xml/SampleScript.xml";
 	public GameObject destinationPos;
+	public GameObject timelineObject;
 
 	public class GameProgress {
 		public int stage;
@@ -133,23 +134,28 @@ public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
 	// Update is called once per frame
 	void Update () {
 		if (playerObject != null) {
-			if (gameProgress.DestinationObject != null) {
-				Vector3 playerPos = playerObject.transform.position;
-				Vector3 destPos = gameProgress.DestinationObject.transform.position;
-				float dist = Vector3.Distance(playerPos, destPos);
-				if (dist <= 0.7f) {
-					// TODO: 스테이지 클리어 처리
-					if (delegateStageClear != null) {
-						delegateStageClear(gameProgress);
+			if (gameProgress != null) {
+				if (gameProgress.DestinationObject != null) {
+					Vector3 playerPos = playerObject.transform.position;
+					Vector3 destPos = gameProgress.DestinationObject.transform.position;
+					float dist = Vector3.Distance(playerPos, destPos);
+					if (dist <= 0.7f) {
+						// TODO: 스테이지 클리어 처리
+						if (delegateStageClear != null) {
+							delegateStageClear(gameProgress);
+						}
+						gameProgress.DestinationObject = null;
+						Debug.Log("STAGE CLEAR");
 					}
-					gameProgress.DestinationObject = null;
-					Debug.Log("STAGE CLEAR");
 				}
+			}else {
+				Debug.Log("gameObject is null");
 			}
 		}
 	}
 
 	private void initEnvironment() {
+		Debug.Log("initEnvironment");
 		if (mainCanvas != null) {
 			RectTransform canvasRect = mainCanvas.gameObject.GetComponent<RectTransform>();
 			// create fadePanel
@@ -185,6 +191,12 @@ public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
 			Debug.LogError("buttonNextAction == null");
 		}
 		
+		if (timelineObject != null) {
+			BDActionTimeLine.setPlayableDirector(timelineObject);
+		}else {
+			Debug.Log("TimelineObject is null");
+		}
+
 		if (gameProgress.hasDestination(xmlDoc)) {
 			Debug.Log("위치도달 조건이 있습니다.");
 			if (destinationPos == null) {
@@ -194,6 +206,7 @@ public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
 		}else {
 			Debug.Log("위치도달 조건이 없습니다.");
 		}
+		
 	}
 
 	IEnumerator StartRutine() {

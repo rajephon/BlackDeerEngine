@@ -2,16 +2,15 @@
 <stage value="1">
     <map name="설원" character="">
         <cutscene no="1" isIntro="false">
-                <action name="페이드인" value="2"></action>
-                <action name="카메라애니메이션" value="메인카메라" value2="sample00"></action>
-                <action name="대화" value="TestPlayer01" value2="메세지 테스트111"></action>
-                <action name="대화" value="TestPlayer02" value2="메세지 테스트222"></action>
-                <action name="대화" value="TestPlayer01" value2="메세지 테스트333"></action>
+                <action name="fadein" value="2"></action>
+                <action name="cameraAnimation" value="메인카메라" value2="sample00"></action>
+                <action name="chat" value="TestPlayer01" value2="메세지 테스트111"></action>
+                <action name="chat" value="TestPlayer02" value2="메세지 테스트222"></action>
+                <action name="chat" value="TestPlayer01" value2="메세지 테스트333"></action>
         </cutscene>
         <cutscene no="2" isIntro="false">
-                <action name="대화" value="TestPlayer01" value2="메세지 테스트222"></action>
-                <action name="대화" value="TestPlayer02" value2="메세지 테스트333"></action>
-                <action name="대화" value="TestPlayer01" value2="메세지 테스트444"></action>
+                <action name="timeline" value="Timeline01"></action>
+                <action name="chat" value="TestPlayer02" value2="메세지 테스트333"></action>
         </cutscene>
     </map>
     <clear con="위치도달"></clear>

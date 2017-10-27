@@ -8,13 +8,12 @@ public class SampleGameControl : MonoBehaviour {
 	void Start () {
 		BlackDeerEngine.Instance.DelegateStageClear = delegate(BlackDeerEngine.GameProgress gameProgress) {
 			Debug.Log(gameProgress.stage+ " STAGE CLEAR");
-
 		};
 		BlackDeerEngine.Instance.DelegateBlockUserControl = delegate(bool uiblocked) {
 			Debug.Log("UIBlockedMode: "+uiblocked);
 		};
 		BlackDeerEngine.Instance.DelegateLoadComplete = delegate() {
-			BlackDeerEngine.Instance.setProgressStep(1, "설원", 1, 1);
+			BlackDeerEngine.Instance.setProgressStep(1, "설원", 2, 1);
 			Debug.Log("Load Complete");
 			BlackDeerEngine.Instance.startProgress();
 		};
