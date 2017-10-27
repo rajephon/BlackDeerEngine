@@ -3,14 +3,17 @@
 
 ## 1. Download & Import
 
-**BlackDeerEngine.unitypackage**를 임포트합니다.
-(만약 필수요소만 임포트하고 싶다면 Examples, StreamingAssets, Resources 디렉토리는 생략해도 됩니다.)
+자신의 프로젝트에 **BlackDeerEngine.unitypackage**를 임포트합니다.
+
+   * 패키지는 repo의 Package/ 디렉토리 안에 있습니다.
+   
+   * 만약 필수요소만 임포트하고 싶다면 Examples, StreamingAssets, Resources 디렉토리는 생략해도 됩니다.
 
 ## 2. DeerBlackEngine 세팅
 
-- GameObject - Create Empty로 빈 프로젝트를 생성
-- BlackDeerEngine.cs를 Add Component
-- public variable 세팅
+1. GameObject - Create Empty로 빈 프로젝트를 생성
+2. BlackDeerEngine.cs를 Add Component
+3. public variable 세팅
 
 <p align="center">
   <img src="https://github.com/rajephon/BlackDeerEngine/blob/master/Document/BlackDeerEngineComponent.png" width="299" />
