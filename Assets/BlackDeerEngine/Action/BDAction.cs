@@ -38,16 +38,6 @@ public class BDAction
                 return new BDActionFadeInOut(period, false);
             }
         }
-        else if (actionName == "cameraAnimation")
-        {
-            string cameraName = actionNode.Attributes["value"].Value;
-            string animName = actionNode.Attributes["value2"].Value;
-            if (cameraName == null || animName == null)
-            {
-                Debug.Log("cameraName == null || animName == null");
-            }
-            return new BDActionCameraMove(cameraName, animName);
-        }
         else if (actionName == "chat")
         {
             string speakerName = actionNode.Attributes["value"].Value;
@@ -57,14 +47,6 @@ public class BDAction
             if (chatMessage == null)
                 Debug.Log("chatMessage == null");
             return new BDActionChatMessage(speakerName, chatMessage);
-        }
-        else if (actionName == "대화보이기")
-        {
-            return new BDActionChatEnable(true);
-        }
-        else if (actionName == "대화감추기")
-        {
-            return new BDActionChatEnable(false);
         }
         else if (actionName == "timeline")
         {
@@ -129,91 +111,6 @@ public class BDActionTimeLine : BDAction
         tclip.duration = 0;
         tclip.displayName = "eventCallback";
 		playableDirector.Play(timelineAsset);
-    }
-}
-public class BDActionCameraMove : BDAction
-{
-    private static Animator animator = null;
-    private static Camera camera = null;
-    private string cameraName = null;
-    private string animName = null;
-    public static void setMainCamera(Camera camera)
-    {
-        // BDActionCameraMove.camera = camera;
-    }
-    public BDActionCameraMove(string cameraName, string animName)
-    {
-        if (cameraName == "메인카메라")
-        {
-            camera = Camera.main;
-        }
-
-        if (camera != null)
-        {
-            this.cameraName = cameraName;
-            this.animName = animName;
-
-            Animator currAnimator = camera.GetComponent<Animator>();
-            if (currAnimator == null)
-            {
-                currAnimator = camera.gameObject.AddComponent<Animator>();
-            }
-            RuntimeAnimatorController animatorController = Resources.Load<RuntimeAnimatorController>("CameraAnimation/MainCamera");
-            //			currAnimator.runtimeAnimatorController = Resources.Load("Assets/BlackDeerEngine/CameraAnimation/Main Camera.controller") as RuntimeAnimatorController;
-            if (animatorController == null)
-            {
-                Debug.Log("runtime animator load error");
-            }
-            else
-            {
-                currAnimator.runtimeAnimatorController = animatorController;
-            }
-            animator = currAnimator;
-        }
-    }
-
-    public override void start(CompletionDelegate completionDelegate)
-    {
-        if (camera == null || animator == null || animName == null)
-        {
-            Debug.Log("camera == null || animator == null || animName == null");
-            return;
-        }
-        BDCameraAnimCallback callback = camera.gameObject.GetComponent<BDCameraAnimCallback>();
-        if (callback == null)
-        {
-            Debug.Log("BDCameraAnimCallback == null");
-            return;
-        }
-        callback.setCompletionDelegate(completionDelegate);
-        animator.Play(animName, 0);
-    }
-}
-
-public class BDActionChatEnable : BDAction
-{
-    private static BDNextActionButton nextActionButton = null;
-    private bool isVisible = true;
-    public BDActionChatEnable(bool isVisible)
-    {
-        this.isVisible = isVisible;
-    }
-    public static void setTxtChatbox(BDNextActionButton nextActionButton, bool isVisible)
-    {
-        setTxtChatbox(nextActionButton);
-        nextActionButton.setHidden(!isVisible);
-    }
-    public static void setTxtChatbox(BDNextActionButton nextActionButton)
-    {
-        BDActionChatEnable.nextActionButton = nextActionButton;
-    }
-    public override void start(CompletionDelegate completionDelegate)
-    {
-        nextActionButton.setHidden(!isVisible);
-        if (completionDelegate != null)
-        {
-            completionDelegate();
-        }
     }
 }
 

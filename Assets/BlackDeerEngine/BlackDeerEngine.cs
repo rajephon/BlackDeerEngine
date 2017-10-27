@@ -178,7 +178,6 @@ public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
 			Debug.LogError("fadePanel == null");
 		}
 
-		mainCamera.gameObject.AddComponent<BDCameraAnimCallback>();
 
 		if (buttonNextAction != null) {
 			BDNextActionButton nextActionButton = buttonNextAction.gameObject.AddComponent<BDNextActionButton>();
@@ -186,7 +185,7 @@ public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
 			if (mainCanvas != null) {
 				BDActionChatMessage.setTxtChatbox(nextActionButton, mainCanvas);
 			}
-			BDActionChatEnable.setTxtChatbox(nextActionButton, false);
+			// BDActionChatEnable.setTxtChatbox(nextActionButton, false);
 		}else {
 			Debug.LogError("buttonNextAction == null");
 		}
