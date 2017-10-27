@@ -3,7 +3,6 @@
     <map name="설원" character="">
         <cutscene no="1" isIntro="false">
                 <action name="fadein" value="2"></action>
-                <action name="cameraAnimation" value="메인카메라" value2="sample00"></action>
                 <action name="chat" value="TestPlayer01" value2="메세지 테스트111"></action>
                 <action name="chat" value="TestPlayer02" value2="메세지 테스트222"></action>
                 <action name="chat" value="TestPlayer01" value2="메세지 테스트333"></action>
