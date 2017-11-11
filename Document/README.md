@@ -3,17 +3,20 @@
 
 ## 1. Download & Import
 
-**BlackDeerEngine.unitypackage**를 임포트합니다.
-(만약 필수요소만 임포트하고 싶다면 Examples, StreamingAssets, Resources 디렉토리는 생략해도 됩니다.)
+자신의 프로젝트에 **BlackDeerEngine.unitypackage**를 임포트합니다.
+
+   * 패키지는 repo의 Package/ 디렉토리 안에 있습니다.
+   
+   * 만약 필수요소만 임포트하고 싶다면 Examples, StreamingAssets, Resources 디렉토리는 생략해도 됩니다.
 
 ## 2. DeerBlackEngine 세팅
 
-- GameObject - Create Empty로 빈 프로젝트를 생성
-- BlackDeerEngine.cs를 Add Component
-- public variable 세팅
+1. GameObject - Create Empty로 빈 프로젝트를 생성
+2. BlackDeerEngine.cs를 Add Component
+3. public variable 세팅
 
 <p align="center">
-  <img src="https://github.com/rajephon/BlackDeerEngine/blob/document/Document/BlackDeerEngineComponent.png" width="299" />
+  <img src="https://github.com/rajephon/BlackDeerEngine/blob/master/Document/BlackDeerEngineComponent.png" width="299" />
 </p>
 
 **Player Object** : Scene내 플레이어의 Object를 연결합니다. 위치 도달 등을 확인할 때 사용됩니다.
@@ -28,7 +31,7 @@
 
 **Destination Pos** : XML스크립트의 스테이지 클리어 조건에 위치도달이 있을 경우, 도달여부를 체크할 도착지 위치의 GameObject를 연결
 
-**Timeline Object** : Timeline을 관리하는 GameObject를 연결
+**Timeline Object** : [Timeline](#timeline)을 관리하는 GameObject를 연결
 
 ------
 
