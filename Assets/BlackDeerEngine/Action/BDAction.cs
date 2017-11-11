@@ -55,6 +55,12 @@ public class BDAction
             if (timelineFiles == null)
                 Debug.Log("timelineFiles is null");
             return new BDActionTimeLine(timelineFiles);
+        }else if (actionName == "SoundEffect") {
+            Debug.Log("SoundEffect");
+            string soundPath = actionNode.Attributes["value"].Value;
+            if (soundPath == null)
+                Debug.Log("SoundPath is null");
+            return new BDActionSoundEffect(soundPath);
         }
         return null;
     }
@@ -69,6 +75,23 @@ public class BDAction
         set { this.name = Name; }
     }
 
+}
+
+public class BDActionSoundEffect : BDAction {
+    private string path = "";
+    private static AudioSource audioSource;
+    public BDActionSoundEffect(string path) {
+        this.path = path;
+    }
+    public static void setAudioSource(AudioSource audioSource) {
+        BDActionSoundEffect.audioSource = audioSource;
+    }
+    public override void start(CompletionDelegate completionDelegate) {
+        if (audioSource != null) {
+            audioSource.PlayOneShot((AudioClip)Resources.Load(path));
+        }
+        completionDelegate();
+    }
 }
 
 public class BDActionTimeLine : BDAction

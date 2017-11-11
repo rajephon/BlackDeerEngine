@@ -206,6 +206,8 @@ public class BlackDeerEngine : BlackDeerSingleton<BlackDeerEngine> {
 			Debug.Log("위치도달 조건이 없습니다.");
 		}
 		
+		AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+		BDActionSoundEffect.setAudioSource(audioSource);
 	}
 
 	IEnumerator StartRutine() {

@@ -16,6 +16,7 @@ public class SampleGameControl : MonoBehaviour {
 			BlackDeerEngine.Instance.setProgressStep(1, "설원", 2, 1);
 			Debug.Log("Load Complete");
 			BlackDeerEngine.Instance.startProgress();
+
 		};
 		
 		

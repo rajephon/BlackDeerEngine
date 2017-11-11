@@ -10,6 +10,7 @@
         <cutscene no="2" isIntro="false">
                 <action name="chat" value="TestPlayer01" value2="메세지 테스트111"></action>
                 <action name="chat" value="TestPlayer02" value2="메세지 테스트222"></action>
+                <action name="SoundEffect" value="Sounds/washing"></action>
                 <action name="timeline" value="Timeline01"></action>
                 <action name="chat" value="TestPlayer02" value2="메세지 테스트333"></action>
                 <action name="chat" value="TestPlayer01" value2="메세지 테스트444"></action>
